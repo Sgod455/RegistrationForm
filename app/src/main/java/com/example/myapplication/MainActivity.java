@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                         getBirthday.setText(dayOfMonth + "/" + (month+1) + "/" + year);
                     }
                 }, year, month, day);
+                pickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 pickerDialog.show();
             }
         }); //end of datepicker
@@ -124,11 +125,13 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(thisFirstName + thisPassword, thisFirstName + "\n" + thisLastName + "\n" + thisEmail + "\n" + getGender + "\n" + myBirthday);
         editor.apply();
 
-        Intent loginScreen = new Intent(MainActivity.this, LoginScreen.class);
-        startActivity(loginScreen);
+        if (!thisFirstName.isEmpty() && !thisLastName.isEmpty() && !thisEmail.isEmpty() && !getGender.isEmpty() && !myBirthday.isEmpty() && !thisPassword.isEmpty() && !thisConfirmPassword.isEmpty()) {
+            Intent loginScreen = new Intent(MainActivity.this, LoginScreen.class);
+            startActivity(loginScreen);
 
 
-        System.out.println( thisFirstName + "\n" + thisLastName + "\n" + thisEmail + "\n" + myBirthday + "\n" + getGender);
+            System.out.println(thisFirstName + "\n" + thisLastName + "\n" + thisEmail + "\n" + myBirthday + "\n" + getGender);
+        }
 //        Toast.makeText(MainActivity.this, "User Registered", Toast.LENGTH_LONG).show();
     }//end of println
 
