@@ -3,6 +3,8 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     EditText getFirstName, getLastName, getEmail, getBirthday, getPassword, getConfirmPassword;
     RadioButton chosenGender;
     RadioGroup genderChoice;
+    Button btnToLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }); //end of datepicker
 
+        btnToLogin = (Button) findViewById(R.id.buttonToLogin);
+        btnToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginScreen = new Intent(MainActivity.this, LoginScreen.class);
+                startActivity(loginScreen);
+            }
+        });
     }
 
     //printing data in console with Register button clicked
@@ -107,8 +118,20 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
         }
 
+        SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(thisFirstName + thisPassword, thisFirstName + "\n" + thisLastName + "\n" + thisEmail + "\n" + getGender + "\n" + myBirthday);
+        editor.apply();
+
+        Intent loginScreen = new Intent(MainActivity.this, LoginScreen.class);
+        startActivity(loginScreen);
+
+
         System.out.println( thisFirstName + "\n" + thisLastName + "\n" + thisEmail + "\n" + myBirthday + "\n" + getGender);
+//        Toast.makeText(MainActivity.this, "User Registered", Toast.LENGTH_LONG).show();
     }//end of println
+
 
 
     private boolean isValidEmail(String email) {
