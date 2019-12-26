@@ -1,73 +1,65 @@
 package com.example.myapplication;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "users")
 public class User {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     private String firstName;
+
     private String lastName;
+
     private String email;
-    private String birthDay;
+
+    private String birthday;
+
     private String gender;
+
     private String password;
 
-    public User() {
+
+    public User(String firstName, String lastName, String email, String birthday, String gender, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.password = password;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getBirthDay() {
-        return birthDay;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setBirthDay(String birthDay) {
-        this.birthDay = birthDay;
+    public String getBirthday() {
+        return birthday;
     }
 
     public String getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthDay='" + birthDay + '\'' +
-                ", gender='" + gender + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

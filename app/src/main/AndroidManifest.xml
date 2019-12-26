@@ -9,23 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterScreen"
-            android:parentActivityName=".LoginScreen">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginScreen" />
-        </activity>
-        <activity android:name=".DisplayUser" android:parentActivityName=".LoginScreen">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginScreen" />
-        </activity>
         <activity android:name=".LoginScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".RegisterScreen"
+            android:parentActivityName=".LoginScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginScreen" />
+        </activity>
+        <activity android:name=".DisplayUser"
+            android:parentActivityName=".LoginScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginScreen" />
         </activity>
     </application>
 
