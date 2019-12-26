@@ -1,7 +1,15 @@
 package com.example.myapplication;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "users", indices = {@Index(value = "email", unique = true)})
 public class User {
 
+    @PrimaryKey(autoGenerate = true)
+    private int uid;
     private String firstName;
     private String lastName;
     private String email;
@@ -10,6 +18,14 @@ public class User {
     private String password;
 
     public User() {
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
     public String getFirstName() {
@@ -60,11 +76,14 @@ public class User {
         this.password = password;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
-                "firstName='" + firstName + '\'' +
+                "uid=" + uid +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
                 ", birthDay='" + birthDay + '\'' +
                 ", gender='" + gender + '\'' +
                 ", password='" + password + '\'' +

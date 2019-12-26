@@ -2,9 +2,11 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Application;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -15,11 +17,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import java.util.Calendar;
-import java.util.Map;
-import java.util.UUID;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class RegisterScreen extends AppCompatActivity {
@@ -30,8 +29,14 @@ public class RegisterScreen extends AppCompatActivity {
     RadioGroup genderChoice;
     Button btnToLogin;
     User myUser;
+    UserDao myUserDao;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+
+    RegisterScreen (Application application){
+        AppDatabase database = AppDatabase.getDatabase(application);
+        myUserDao = database.userDao();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,50 +139,56 @@ public class RegisterScreen extends AppCompatActivity {
             myUser.setGender(userGender);
             myUser.setPassword(thisPassword);
 
-            if (emailExists(thisEmail)){
-                Toast.makeText(RegisterScreen.this, "E-mail Exists", Toast.LENGTH_LONG).show();
-            } else {
+            myUserDao.insert(myUser);
 
-                userRegisterSharedPref(myUser);
-
-            }
+//            if (emailExists(thisEmail)){
+//                Toast.makeText(RegisterScreen.this, "E-mail Exists", Toast.LENGTH_LONG).show();
+//            } else {
+//
+//                userRegisterSharedPref(myUser);
+//
+//            }
         }
 
 
     }
 
-    private void userRegisterSharedPref(User user){
-        preferences = getApplicationContext().getSharedPreferences("userData", MODE_PRIVATE);
-        editor = preferences.edit();
 
-        Gson gson = new Gson();
-        String json = gson.toJson(user);
-        String uniqueID = UUID.randomUUID().toString();
-        editor.putString(uniqueID, json);
+//    //register user to shared prefs
+//    private void userRegisterSharedPref(User user){
+//        preferences = getApplicationContext().getSharedPreferences("userData", MODE_PRIVATE);
+//        editor = preferences.edit();
+//
+//        Gson gson = new Gson();
+//        String json = gson.toJson(user);
+//        String uniqueID = UUID.randomUUID().toString();
+//        editor.putString(uniqueID, json);
+//
+//        boolean isRegistered = editor.commit();
+//
+//        if (isRegistered){
+//            Toast.makeText(RegisterScreen.this, "User Registered", Toast.LENGTH_LONG).show();
+//            Intent displayLogin = new Intent(RegisterScreen.this, LoginScreen.class);
+//            startActivity(displayLogin);
+//        } else {
+//            Toast.makeText(RegisterScreen.this, "Couldn't register", Toast.LENGTH_LONG).show();
+//        }
+//    }
 
-        boolean isRegistered = editor.commit();
 
-        if (isRegistered){
-            Toast.makeText(RegisterScreen.this, "User Registered", Toast.LENGTH_LONG).show();
-            Intent displayLogin = new Intent(RegisterScreen.this, LoginScreen.class);
-            startActivity(displayLogin);
-        } else {
-            Toast.makeText(RegisterScreen.this, "Couldn't register", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private boolean emailExists(String email){
-        preferences = getApplicationContext().getSharedPreferences("userData", MODE_PRIVATE);
-        Map<String, ?> stringMap = preferences.getAll();
-        for (Map.Entry<String, ?> entry : stringMap.entrySet()){
-            String userDetails = entry.getValue().toString();
-            if (userDetails.contains(email)){
-                return true;
-            }
-        }
-
-        return false;
-    }
+//    //check if email exists in shared prefs
+//    private boolean emailExists(String email){
+//        preferences = getApplicationContext().getSharedPreferences("userData", MODE_PRIVATE);
+//        Map<String, ?> stringMap = preferences.getAll();
+//        for (Map.Entry<String, ?> entry : stringMap.entrySet()){
+//            String userDetails = entry.getValue().toString();
+//            if (userDetails.contains(email)){
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
 
 ////    printing data in console with Register button clicked
 //    public void printData(View view) {
