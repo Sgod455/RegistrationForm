@@ -93,6 +93,7 @@ public class RegisterScreen extends AppCompatActivity {
         String myBirthday = getBirthday.getText().toString();
 
         genderChoice = (RadioGroup) findViewById(R.id.gender);
+//        comment
 
         chosenGender = (RadioButton) findViewById(genderChoice.getCheckedRadioButtonId());
 
